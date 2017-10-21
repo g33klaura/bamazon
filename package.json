@@ -1,0 +1,28 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "Packages to accompany Bamazon Node App",
+  "main": "bamCRUD.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g33klaura/bamazon.git"
+  },
+  "keywords": [
+    "inventory",
+    "sales",
+    "wishlist"
+  ],
+  "author": "Laura Boetcher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/g33klaura/bamazon/issues"
+  },
+  "homepage": "https://github.com/g33klaura/bamazon#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "mysql": "^2.15.0"
+  }
+}
