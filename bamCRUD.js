@@ -22,12 +22,13 @@ const table = require('cli-table');
 // 
 
 const connection = mysql.createConnection({
-	host: 127.0.0.1,
+	host: '127.0.0.1',
 	port: 3306,
 	user: 'root',
-	password: ''.
+	password: '',
 	database: 'bamazon'
 });
+
 connection.connect(function(error) {
 	if (error) throw error;
 	console.log('connected as id ' + connection.threadId + '\n');
