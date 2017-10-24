@@ -1,4 +1,4 @@
-// NOTHING SHOULD USE THIS FILE FOR NOW (10.23)
+// Nevermind, forgot this controls the package.json...
 
 
 // REQUIREMENTS ========================================
@@ -6,6 +6,7 @@
 
 const mysql = require('mysql');
 const table = require('cli-table');
+const colors = require('colors');
 
 
 
