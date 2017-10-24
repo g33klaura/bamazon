@@ -50,14 +50,12 @@ connection.connect(function(error) {
 // VARIABLES & CONSTRUCTORS ============================
 // 
 
+// Customer view table displays ID, Product Name, Dept(?), and Price
 // let table = new Table({
 // 	head: ['TH 1 id', 'TH 2 product_name'],
 // 	colWidths: [5, 60]
 // });
 
-// So... how to get the values to be read from the database....
-// let query = connection.query ....
-// but that's in 'bamCRUD.js'....
 // table.push(
 // 	['First value', 'Second value'],
 // );
@@ -92,17 +90,26 @@ function askCustomer() {
 			message: 'How many of those would you like to buy?'
 		}
 	])
-	.then(function(inquirerResponse) {
+	.then(function(answer) {
 		// Test response  ~WORKS
-		console.log('You selected ' + inquirerResponse.qtyToBuy + ' of item number: ' + inquirerResponse.itemsToBuy);
-
-		makeSale();
+		// console.log('You selected ' + answer.qtyToBuy + ' of item number: ' + answer.itemsToBuy);
+		let query = 'SELECT product_name FROM products WHERE ?';
+		connection.query(query, { id: answer.itemsToBuy }, function(error, results) {
+			for (var i = 0; i < results.length; i++) {
+				// console.log('You selected: ' + results[i].product_name);
+				console.log('You\'d like to buy ' + answer.qtyToBuy + ', "' + results[i].product_name + '"');
+				console.log('Let\'s check if that\'s in stock...');
+			};	
+		});
+		connection.end();
+		// makeSale();
 	});
 }
 
-function makeSale() {
-	// body...
-}
+// function makeSale() {
+	// needs to first check if there's enough inventory to fill the order
+	// if not, log 'insufficient qty'
+// }
 
 // Put this at end of last function to run
 // connection.end();
