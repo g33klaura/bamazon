@@ -4,6 +4,14 @@
 Steps to complete:
 [] Connection to database
 [] 'bamazonCustomer.js' displays all items for sale
+[] next, prompts user to enter the id of an item they wish to buy
+[] second prompt asks how many of the item they wish to buy
+[] show "added to cart" or "insufficient qty" message
+[] if purchase is successful, 
+	 [] the qty needs to be subtracted from the database
+	 [] and total of purchase is displayed
+
+*totally should've recreated the store from Oregon Trail. D'OH!!! 
 
 
 This file writes the code for the actual node interface
@@ -18,23 +26,10 @@ User will be able to write 'node bamazonCustomer' and do the things required for
 const mysql = require('mysql');
 const table = require('cli-table');
 
-// Moved connections from CRUD to this file till I know if I even need the other file....
-// const bamCRUD = require('./bamCRUD.js');
 
-const connection = mysql.createConnection({
-	host: '127.0.0.1',
-	port: 3306,
-	user: 'root',
-	password: '',
-	database: 'bamazon'
-});
+const bamCRUD = require('./bamCRUD.js');
 
-connection.connect(function(error) {
-	if (error) throw error;
-	console.log('connected as id ' + connection.threadId + '\n');
 
-	// createProduct(); <~from iceCreamCRUD activity
-});
 
 
 
