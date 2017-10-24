@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Packages to accompany Bamazon Node App",
   "main": "bamCRUD.js",
+  "main": "bamazonCustomer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,6 +25,7 @@
   "dependencies": {
     "cli-table": "^0.3.1",
     "colors": "^1.1.2",
+    "inquirer": "^3.3.0",
     "mysql": "^2.15.0"
   }
 }
