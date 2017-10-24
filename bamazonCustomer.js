@@ -3,7 +3,8 @@
 /*
 Steps to complete:
 [x] Connection to database
-[] 'bamazonCustomer.js' displays all items for sale
+[x] 'bamazonCustomer.js' displays all items for sale
+[] Use fancy tables to display
 [] next, prompts user to enter the id of an item they wish to buy
 [] second prompt asks how many of the item they wish to buy
 [] show "added to cart" or "insufficient qty" message
@@ -71,9 +72,40 @@ function displayProducts() {
 	connection.query('SELECT * FROM products', function(error, results) {
 		if (error) throw error;
 		console.log(results);
-		connection.end();
+
+		askCustomer();
 	});
 }
+
+function askCustomer() {
+	inquirer.prompt([
+		// Inquirer prompt asking user to enter the id of the product they'd like to buy
+		{
+			type: 'input',
+			name: 'itemsToBuy',
+			message: 'Please enter the id of the item you wish to buy.'
+		},
+		// Second prompt asks how many units of the item they'd like to buy
+		{
+			type: 'input',
+			name: 'qtyToBuy',
+			message: 'How many of those would you like to buy?'
+		}
+	])
+	.then(function(inquirerResponse) {
+		// Test response  ~WORKS
+		console.log('You selected ' + inquirerResponse.qtyToBuy + ' of item number: ' + inquirerResponse.itemsToBuy);
+
+		makeSale();
+	});
+}
+
+function makeSale() {
+	// body...
+}
+
+// Put this at end of last function to run
+// connection.end();
 
 
 
