@@ -1,11 +1,40 @@
+// JavaScript for Bamazon ~ Customer View
+
+/*
+Steps to complete:
+[] Connection to database
+[] 'bamazonCustomer.js' displays all items for sale
+
+
+This file writes the code for the actual node interface
+User will be able to write 'node bamazonCustomer' and do the things required for the homework
+
+*/
+
+
 // REQUIREMENTS ========================================
 // 
 
-// const mysql = require('mysql');
-const Table = require('cli-table');
+const mysql = require('mysql');
+const table = require('cli-table');
 
-const bamCRUD = require('./bamCRUD.js');
+// Moved connections from CRUD to this file till I know if I even need the other file....
+// const bamCRUD = require('./bamCRUD.js');
 
+const connection = mysql.createConnection({
+	host: '127.0.0.1',
+	port: 3306,
+	user: 'root',
+	password: '',
+	database: 'bamazon'
+});
+
+connection.connect(function(error) {
+	if (error) throw error;
+	console.log('connected as id ' + connection.threadId + '\n');
+
+	// createProduct(); <~from iceCreamCRUD activity
+});
 
 
 

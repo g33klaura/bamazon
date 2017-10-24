@@ -1,13 +1,4 @@
-// JavaScript for Bamazon
-
-/*
-Steps to complete:
-[] Connection to database
-[] 'bamazonCustomer.js' displays all items for sale
-
-Q: WHICH FILE LINKS TO WHICH???
-If bamazonCustomer runs, THAT needs the 'cli-table' req
-*/
+// NOTHING SHOULD USE THIS FILE FOR NOW (10.23)
 
 
 // REQUIREMENTS ========================================
