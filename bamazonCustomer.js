@@ -132,17 +132,41 @@ function askCustomer() {
 		cartId = answer.itemsToBuy;
 
 		// connection.end();
-		makeSale();
+		// makeSale();
+		checkQty();
 	});
 }
+
+// Function to check if the qty is available to be sold, THEN makeSale()
+function checkQty() {
+
+	// Log variables set in askCustomer()  ~WORKS
+	console.log('ID to buy: ', cartId);
+	console.log('Amount to buy: ', cartQty);
+
+	// let currentQty = 
+
+	// Do another query to see what the current on_hand_qty is, for the id the user has entered
+	// If stock is avail, store the number to subtract from the o/h in a new variable
+		// See if that new number can be subtracted in the make sale function?
+		// Or should it be the -actual- number to set the new o/h too?... more like the updateProducts() in the ice cream example...
+
+
+
+	makeSale();
+
+}
+
+
 
 function makeSale() {
 	// needs to first check if there's enough inventory to fill the order
 	// will the inquirer answers be part of this scope tho.....
 	// console.log(answer.qtyToBuy);
 	// yeah, not in the scope....... hrm............
-	console.log('ID to buy: ', cartId);
-	console.log('Amount to buy: ', cartQty);
+	// console.log('ID to buy: ', cartId);
+	// console.log('Amount to buy: ', cartQty);
+
 
 	// let query = connection.query('UPDATE products SET ? WHERE ?', 
 	// 	[
