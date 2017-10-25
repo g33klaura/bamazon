@@ -27,7 +27,7 @@ User will be able to write 'node bamazonCustomer' and do the things required for
 // const bamCRUD = require('./bamCRUD.js');
 
 const Table = require('cli-table');
-const colors = require('colors');
+const colors = require('colors/safe');
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 
@@ -76,10 +76,10 @@ function displayProducts() {
 
 		// Needs to log id, names, prices
 		for (var k = 0; k < results.length; k++) {
-			console.log('ID: ', results[k].id, ' ', results[k].product_name);
-			// console.log(results[k].product_name);
-			console.log(results[k].price);
-			console.log('-------------');
+			console.log('ID: '.bold.cyan, results[k].id, ' ', results[k].product_name.cyan, ' ', results[k].price);
+			
+			console.log(colors.magenta(results[k].price));
+			console.log('---------------------------------------');
 		}
 
 		askCustomer();
