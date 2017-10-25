@@ -105,6 +105,7 @@ function displayProducts() {
 	});
 }
 
+
 function askCustomer() {
 	inquirer.prompt([
 		// Inquirer prompt asking user to enter the id of the product they'd like to buy
@@ -147,6 +148,7 @@ function askCustomer() {
 	});
 }
 
+
 // Function to check if the qty is available to be sold, THEN makeSale()
 function checkQty() {
 
@@ -177,75 +179,58 @@ function checkQty() {
 					// How do I do the math not tied to this for loop???????
 					// Does it matter....
 
+					// Finally checks qty user wants against available qty
 					switch (true) {
+						
+						// If the update qty is 0 or below, the sale can't be completed
 						case (updateQty <= 0):
-
-							console.log('insufficient qty');
+							console.log('Sorry, insufficient quantity available. Order cannot be fulfilled.');
+							console.log('Would you like to make another purchase?');
+							// Calls function to display products again
+							displayProducts();
 							break;
 
+						// All other quantities means there's enough stock to fulfil the order
 						default:
-
-							console.log('yes, in stock');
+							console.log('Success! Those are in stock.');
+							// Call function to update the database and display cart total to customer
+							makeSale();
 							break;
-
 					}
-
-
-				};
+				};  //Closes for loop
 				// console.log('Is this thing on? ' + currentQty);
-				// No, no it is not on
+				// No, no it is not on............
 			});
 
 	// console.log(currentQty);
 	// My scope is off............ how to carry the response through?!!
-
-
-	// If stock is avail, store the number to subtract from the o/h in a new variable
-		// See if that new number can be subtracted in the make sale function?
-		// Or should it be the -actual- number to set the new o/h too?... more like the updateProducts() in the ice cream example...
-
-	// Should the in stock/oos happen here or in makeSale()?
-
-
-	// ########### LEft off here before head exploded (4:09)##################
-	// ###########################################################
-
-
-	makeSale();
-
 }
 
 
-
 function makeSale() {
-	// needs to first check if there's enough inventory to fill the order
-	// will the inquirer answers be part of this scope tho.....
-	// console.log(answer.qtyToBuy);
-	// yeah, not in the scope....... hrm............
-	// console.log('ID to buy: ', cartId);
-	// console.log('Amount to buy: ', cartQty);
+	
+	let query = connection.query('UPDATE products SET ? WHERE ?', 
+		[
+			{
+				on_hand_qty: updateQty
+			},
+			{
+				// id: answer.itemsToBuy
+				id: cartId
+			}
+		],
+		function(err, res) {
 
-	// Nope, undefined......
-	// console.log(updateQty);
+			console.log(query.sql);
+			console.log('-------------');
 
-	// let query = connection.query('UPDATE products SET ? WHERE ?', 
-	// 	[
-	// 		{
-	// 			on_hand_qty: -= answer.qtyToBuy
-	// 								// ^^Doesn't like this operator....
-	// 								// Save the amount to update the total by in another var??
-	// 		},
-	// 		{
-	// 			id: answer.itemsToBuy
-	// 		}
-	// 	],
-	// 	function(err, res) {
+			if (err) throw err;
 
-	// 		// See what's running first
-	// 		console.log(query.sql);
+			console.log('Inventory qty updated');
+			console.log(res.affectedRows + ' was updated\n');
 
-	// 		connection.end();
-	// 	})
+			connection.end();
+		})
 
 	// Hold items to buy in new variable - new query
 	// use that as switch statement argument to check against
