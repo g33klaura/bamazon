@@ -41,7 +41,7 @@ const connection = mysql.createConnection({
 
 connection.connect(function(error) {
 	if (error) throw error;
-	console.log('connected as id ' + connection.threadId + '\n');
+	console.log('\nconnected as id ' + connection.threadId + '\n');
 
 	// createProduct(); <~from iceCreamCRUD activity
 	displayProducts();
@@ -65,6 +65,9 @@ connection.connect(function(error) {
 let cartQty = 0;
 let cartId = 0;
 
+// Empty var to hold on_hand_qty from DB
+let currentQty = 0;
+
 
 
 // FUNCTIONS ===========================================
@@ -79,11 +82,13 @@ function displayProducts() {
 
 		// console.log(results);
 
-		// See what's actually being run**********
+		// See what's actually being run**********Says query undefined...
+				// ^^Think it's because the clause string isn't being stored in a variable, like it is in askCustomer()
 		// console.log(query.sql);
 		// console.log('-------------');
 
-		// Needs to log id, names, prices ~CHECK
+		// Needs to log id, names, prices ~DONE
+
 		for (var k = 0; k < results.length; k++) {
 			// console.log('ID: '.bold.cyan, results[k].id, ' ', results[k].product_name.cyan, ' ', results[k].price);
 			
@@ -115,6 +120,8 @@ function askCustomer() {
 	.then(function(answer) {
 		// Test response  ~WORKS
 		// console.log('You selected ' + answer.qtyToBuy + ' of item number: ' + answer.itemsToBuy);
+
+		// This version of query, stores the query clause string in the variable of "query"
 		let query = 'SELECT product_name FROM products WHERE ?';
 
 		connection.query(query, { id: answer.itemsToBuy }, function(error, results) {
@@ -141,12 +148,32 @@ function askCustomer() {
 function checkQty() {
 
 	// Log variables set in askCustomer()  ~WORKS
-	console.log('ID to buy: ', cartId);
-	console.log('Amount to buy: ', cartQty);
-
-	// let currentQty = 
+	console.log('ID to buy:', cartId);
+	console.log('Amount to buy:', cartQty);
+	console.log('-------------');
 
 	// Do another query to see what the current on_hand_qty is, for the id the user has entered
+	connection.query('SELECT id, on_hand_qty FROM products WHERE ?',
+		{
+			id: cartId
+		},
+			function(err, res) {
+				// console.log(res);
+				
+				for (var q = 0; q < res.length; q++) {
+					console.log(res[q].id + ' Qty avail: ' + res[q].on_hand_qty);
+				
+					currentQty = res[q].on_hand_qty;
+						console.log(currentQty);
+
+				};
+			}	
+	);
+
+	// console.log(currentQty);
+	// My scope is off............ how to carry the response through?!!
+
+
 	// If stock is avail, store the number to subtract from the o/h in a new variable
 		// See if that new number can be subtracted in the make sale function?
 		// Or should it be the -actual- number to set the new o/h too?... more like the updateProducts() in the ice cream example...
