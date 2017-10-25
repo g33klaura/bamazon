@@ -75,6 +75,10 @@ function displayProducts() {
 
 		// console.log(results);
 
+		// See what's actually being run**********
+		console.log(query.sql);
+		console.log('-------------');
+
 		// Needs to log id, names, prices ~CHECK
 		for (var k = 0; k < results.length; k++) {
 			// console.log('ID: '.bold.cyan, results[k].id, ' ', results[k].product_name.cyan, ' ', results[k].price);
@@ -119,15 +123,42 @@ function askCustomer() {
 				console.log('\nLet\'s check if that\'s in stock...\n');
 			};	
 		});
-		connection.end();
-		// makeSale();
+		// connection.end();
+		makeSale();
 	});
 }
 
-// function makeSale() {
+function makeSale() {
 	// needs to first check if there's enough inventory to fill the order
-	// if not, log 'insufficient qty'
-// }
+	// will the inquirer answers be part of this scope tho.....
+
+	let query = connection.query('UPDATE products SET ? WHERE ?', 
+		[
+			{
+				on_hand_qty: -= answer.qtyToBuy
+									// ^^Doensn't like this operator....
+			},
+			{
+				id: answer.itemsToBuy
+			}
+		],
+		function(err, res) {
+
+			// See what's running first
+			console.log(query.sql);
+
+			connection.end();
+		})
+
+	// Hold items to buy in new variable - new query
+	// use that as switch statement argument to check against
+	// case in stock, update qty in database, display total purchase cost, log sale successful
+	// case out of stock, log 'insufficient qty', log sale unsuccessful
+
+	// switch 
+
+	// connection.end();
+}
 
 // Put this at end of last function to run
 // connection.end();
