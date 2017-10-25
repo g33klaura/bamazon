@@ -69,7 +69,18 @@ connection.connect(function(error) {
 function displayProducts() {
 	connection.query('SELECT * FROM products', function(error, results) {
 		if (error) throw error;
-		console.log(results);
+		
+		// Raw results logs an array of objects...
+		// How can I get this to a format for cli-table...
+		// console.log(results);
+
+		// Needs to log id, names, prices
+		for (var k = 0; k < results.length; k++) {
+			console.log('ID: ', results[k].id, ' ', results[k].product_name);
+			// console.log(results[k].product_name);
+			console.log(results[k].price);
+			console.log('-------------');
+		}
 
 		askCustomer();
 	});
@@ -81,23 +92,26 @@ function askCustomer() {
 		{
 			type: 'input',
 			name: 'itemsToBuy',
-			message: 'Please enter the id of the item you wish to buy.'
+			message: 'Please enter the id of the item you wish to buy.'.magenta
 		},
 		// Second prompt asks how many units of the item they'd like to buy
 		{
 			type: 'input',
 			name: 'qtyToBuy',
-			message: 'How many of those would you like to buy?'
+			message: 'How many of those would you like to buy?'.magenta
 		}
 	])
 	.then(function(answer) {
 		// Test response  ~WORKS
 		// console.log('You selected ' + answer.qtyToBuy + ' of item number: ' + answer.itemsToBuy);
 		let query = 'SELECT product_name FROM products WHERE ?';
+
 		connection.query(query, { id: answer.itemsToBuy }, function(error, results) {
+			
 			for (var i = 0; i < results.length; i++) {
 				// console.log('You selected: ' + results[i].product_name);
 				console.log('You\'d like to buy ' + answer.qtyToBuy + ', "' + results[i].product_name + '"');
+				// why is the dept_name undefined? results[i].dept_name... since it's not asked for in inquirer?...
 				console.log('Let\'s check if that\'s in stock...');
 			};	
 		});
