@@ -61,12 +61,15 @@ connection.connect(function(error) {
 // );
 // console.log(table.toString());
 
-// Empty var to later hold qty customer wishes to buy
+// Will hold qty and id of product customer wishes to buy
 let cartQty = 0;
 let cartId = 0;
 
 // Empty var to hold on_hand_qty from DB
-let currentQty = 0;
+// let currentQty = 0;
+
+// Will hold integer to set new on_hand_qty to
+let updateQty = 0;
 
 
 
@@ -163,12 +166,19 @@ function checkQty() {
 				for (var q = 0; q < res.length; q++) {
 					console.log(res[q].id + ' Qty avail: ' + res[q].on_hand_qty);
 				
-					currentQty = res[q].on_hand_qty;
-						console.log(currentQty);
+					let currentQty = res[q].on_hand_qty;
+						console.log('currentQty= ' + currentQty);
+						console.log('-------------');
+
+					updateQty = currentQty - cartQty;
+						console.log('Update inventory to: ' + updateQty);
+
+
+					// How do I do the math not tied to this for loop???????
 
 				};
-			}	
-	);
+
+			});
 
 	// console.log(currentQty);
 	// My scope is off............ how to carry the response through?!!
@@ -177,6 +187,8 @@ function checkQty() {
 	// If stock is avail, store the number to subtract from the o/h in a new variable
 		// See if that new number can be subtracted in the make sale function?
 		// Or should it be the -actual- number to set the new o/h too?... more like the updateProducts() in the ice cream example...
+
+	// Should the in stock/oos happen here or in makeSale()?
 
 
 
