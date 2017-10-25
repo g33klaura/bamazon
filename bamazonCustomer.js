@@ -5,8 +5,8 @@ Steps to complete:
 [x] Connection to database
 [x] 'bamazonCustomer.js' displays all items for sale
 [] Use fancy tables to display
-[] next, prompts user to enter the id of an item they wish to buy
-[] second prompt asks how many of the item they wish to buy
+[x] next, prompts user to enter the id of an item they wish to buy
+[x] second prompt asks how many of the item they wish to buy
 [] show "added to cart" or "insufficient qty" message
 [] if purchase is successful, 
 	 [] the qty needs to be subtracted from the database
@@ -72,14 +72,17 @@ function displayProducts() {
 		
 		// Raw results logs an array of objects...
 		// How can I get this to a format for cli-table...
+
 		// console.log(results);
 
-		// Needs to log id, names, prices
+		// Needs to log id, names, prices ~CHECK
 		for (var k = 0; k < results.length; k++) {
-			console.log('ID: '.bold.cyan, results[k].id, ' ', results[k].product_name.cyan, ' ', results[k].price);
+			// console.log('ID: '.bold.cyan, results[k].id, ' ', results[k].product_name.cyan, ' ', results[k].price);
 			
-			console.log(colors.magenta(results[k].price));
-			console.log('---------------------------------------');
+			console.log(colors.magenta('ID: ', colors.bold(results[k].id), ' ', results[k].product_name, ' ', results[k].price));
+
+			// console.log(colors.magenta(results[k].price));
+			console.log(colors.rainbow('-----------------------------------------------------------------'));
 		}
 
 		askCustomer();
@@ -92,13 +95,13 @@ function askCustomer() {
 		{
 			type: 'input',
 			name: 'itemsToBuy',
-			message: 'Please enter the id of the item you wish to buy.'.magenta
+			message: colors.white('Please enter the id of the item you wish to buy.')
 		},
 		// Second prompt asks how many units of the item they'd like to buy
 		{
 			type: 'input',
 			name: 'qtyToBuy',
-			message: 'How many of those would you like to buy?'.magenta
+			message: colors.white('How many of those would you like to buy?')
 		}
 	])
 	.then(function(answer) {
@@ -110,9 +113,10 @@ function askCustomer() {
 			
 			for (var i = 0; i < results.length; i++) {
 				// console.log('You selected: ' + results[i].product_name);
-				console.log('You\'d like to buy ' + answer.qtyToBuy + ', "' + results[i].product_name + '"');
 				// why is the dept_name undefined? results[i].dept_name... since it's not asked for in inquirer?...
-				console.log('Let\'s check if that\'s in stock...');
+				console.log('\nYou\'d like to buy ' + colors.underline(answer.qtyToBuy) + ', "' + results[i].product_name + '"');
+				
+				console.log('\nLet\'s check if that\'s in stock...\n');
 			};	
 		});
 		connection.end();
