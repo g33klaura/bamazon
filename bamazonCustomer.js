@@ -61,6 +61,10 @@ connection.connect(function(error) {
 // );
 // console.log(table.toString());
 
+// Empty var to later hold qty customer wishes to buy
+let cartQty = 0;
+let cartId = 0;
+
 
 
 // FUNCTIONS ===========================================
@@ -76,8 +80,8 @@ function displayProducts() {
 		// console.log(results);
 
 		// See what's actually being run**********
-		console.log(query.sql);
-		console.log('-------------');
+		// console.log(query.sql);
+		// console.log('-------------');
 
 		// Needs to log id, names, prices ~CHECK
 		for (var k = 0; k < results.length; k++) {
@@ -123,6 +127,10 @@ function askCustomer() {
 				console.log('\nLet\'s check if that\'s in stock...\n');
 			};	
 		});
+
+		cartQty = answer.qtyToBuy;
+		cartId = answer.itemsToBuy;
+
 		// connection.end();
 		makeSale();
 	});
@@ -131,24 +139,29 @@ function askCustomer() {
 function makeSale() {
 	// needs to first check if there's enough inventory to fill the order
 	// will the inquirer answers be part of this scope tho.....
+	// console.log(answer.qtyToBuy);
+	// yeah, not in the scope....... hrm............
+	console.log('ID to buy: ', cartId);
+	console.log('Amount to buy: ', cartQty);
 
-	let query = connection.query('UPDATE products SET ? WHERE ?', 
-		[
-			{
-				on_hand_qty: -= answer.qtyToBuy
-									// ^^Doensn't like this operator....
-			},
-			{
-				id: answer.itemsToBuy
-			}
-		],
-		function(err, res) {
+	// let query = connection.query('UPDATE products SET ? WHERE ?', 
+	// 	[
+	// 		{
+	// 			on_hand_qty: -= answer.qtyToBuy
+	// 								// ^^Doesn't like this operator....
+	// 								// Save the amount to update the total by in another var??
+	// 		},
+	// 		{
+	// 			id: answer.itemsToBuy
+	// 		}
+	// 	],
+	// 	function(err, res) {
 
-			// See what's running first
-			console.log(query.sql);
+	// 		// See what's running first
+	// 		console.log(query.sql);
 
-			connection.end();
-		})
+	// 		connection.end();
+	// 	})
 
 	// Hold items to buy in new variable - new query
 	// use that as switch statement argument to check against
@@ -157,7 +170,7 @@ function makeSale() {
 
 	// switch 
 
-	// connection.end();
+	connection.end();
 }
 
 // Put this at end of last function to run
