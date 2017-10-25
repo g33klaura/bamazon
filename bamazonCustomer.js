@@ -62,14 +62,14 @@ connection.connect(function(error) {
 // console.log(table.toString());
 
 // Will hold qty and id of product customer wishes to buy
-let cartQty = 0;
-let cartId = 0;
+let cartQty;
+let cartId;
 
 // Empty var to hold on_hand_qty from DB
 // let currentQty = 0;
 
 // Will hold integer to set new on_hand_qty to
-let updateQty = 0;
+let updateQty;
 
 
 
@@ -151,8 +151,8 @@ function askCustomer() {
 function checkQty() {
 
 	// Log variables set in askCustomer()  ~WORKS
-	console.log('ID to buy:', cartId);
-	console.log('Amount to buy:', cartQty);
+	// console.log('ID to buy:', cartId);
+	// console.log('Amount to buy:', cartQty);
 	console.log('-------------');
 
 	// Do another query to see what the current on_hand_qty is, for the id the user has entered
@@ -164,20 +164,36 @@ function checkQty() {
 				// console.log(res);
 				
 				for (var q = 0; q < res.length; q++) {
-					console.log(res[q].id + ' Qty avail: ' + res[q].on_hand_qty);
+					console.log('Product ID: ' + res[q].id + ' Qty avail: ' + res[q].on_hand_qty);
 				
 					let currentQty = res[q].on_hand_qty;
-						console.log('currentQty= ' + currentQty);
-						console.log('-------------');
-
+						// console.log('currentQty= ' + currentQty);
+						
 					updateQty = currentQty - cartQty;
 						console.log('Update inventory to: ' + updateQty);
+						console.log('-------------');
 
 
 					// How do I do the math not tied to this for loop???????
+					// Does it matter....
+
+					switch (true) {
+						case (updateQty <= 0):
+
+							console.log('insufficient qty');
+							break;
+
+						default:
+
+							console.log('yes, in stock');
+							break;
+
+					}
+
 
 				};
-
+				// console.log('Is this thing on? ' + currentQty);
+				// No, no it is not on
 			});
 
 	// console.log(currentQty);
@@ -190,6 +206,9 @@ function checkQty() {
 
 	// Should the in stock/oos happen here or in makeSale()?
 
+
+	// ########### LEft off here before head exploded (4:09)##################
+	// ###########################################################
 
 
 	makeSale();
@@ -206,6 +225,8 @@ function makeSale() {
 	// console.log('ID to buy: ', cartId);
 	// console.log('Amount to buy: ', cartQty);
 
+	// Nope, undefined......
+	// console.log(updateQty);
 
 	// let query = connection.query('UPDATE products SET ? WHERE ?', 
 	// 	[
@@ -243,3 +264,5 @@ function makeSale() {
 
 // MAIN PROCESS ========================================
 // 
+
+// ...is apparently all functions within functions
