@@ -7,17 +7,15 @@ Steps to complete:
 [] Use fancy tables to display
 [x] next, prompts user to enter the id of an item they wish to buy
 [x] second prompt asks how many of the item they wish to buy
-[] show "added to cart" or "insufficient qty" message
-[] if purchase is successful, 
-	 [] the qty needs to be subtracted from the database
-	 [] and total of purchase is displayed
+[x] show "added to cart" or "insufficient qty" message
+[x] if purchase is successful, 
+	 [x] the qty needs to be subtracted from the database
+	 [x] and total of purchase is displayed
 
 *totally should've recreated the store from Oregon Trail. D'OH!!! 
 
-
 This file writes the code for the actual node interface
 User will be able to write 'node bamazonCustomer' and do the things required for the homework
-
 */
 
 
@@ -40,16 +38,26 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(function(error) {
-	if (error) throw error;
-	console.log('\nconnected as id ' + connection.threadId + '\n');
 
-	// createProduct(); <~from iceCreamCRUD activity
+	if (error) throw error;
+	// Test log to check for connection  ~WORKS
+	// console.log( '\nconnected as id ' + connection.threadId + '\n' );
+
 	displayProducts();
 });
 
 // VARIABLES & CONSTRUCTORS ============================
 // 
 
+// Will hold qty, id, and price of product customer wishes to buy
+let cartQty;
+let cartId;
+let price;
+
+// Will hold integer to set new on_hand_qty to
+let updateQty;
+
+// ***Still need to get tables working*************************************
 // Customer view table displays ID, Product Name, Dept(?), and Price
 // let table = new Table({
 // 	head: ['TH 1 id', 'TH 2 product_name'],
@@ -60,17 +68,6 @@ connection.connect(function(error) {
 // 	['First value', 'Second value'],
 // );
 // console.log(table.toString());
-
-// Will hold qty and id of product customer wishes to buy
-let cartQty;
-let cartId;
-let price;
-
-// Empty var to hold on_hand_qty from DB
-// let currentQty = 0;
-
-// Will hold integer to set new on_hand_qty to
-let updateQty;
 
 
 
@@ -86,22 +83,15 @@ function displayProducts() {
 
 		// console.log(results);
 
-		// See what's actually being run**********Says query undefined...
-				// ^^Think it's because the clause string isn't being stored in a variable, like it is in askCustomer()
-		// console.log(query.sql);
-		// console.log('-------------');
-
-		// Needs to log id, names, prices ~DONE
-
+		// Loop through results to log the id, names, and retail prices of items available in store
 		for (var k = 0; k < results.length; k++) {
-			// console.log('ID: '.bold.cyan, results[k].id, ' ', results[k].product_name.cyan, ' ', results[k].price);
-			
+	
 			console.log(colors.magenta('ID: ', colors.bold(results[k].id), ' ', results[k].product_name, ' ', results[k].price));
 
-			// console.log(colors.magenta(results[k].price));
 			console.log(colors.rainbow('\n-----------------------------------------------------------------\n'));
 		}
 
+		// Calls function with prompts for customer to select items & qty to buy
 		askCustomer();
 	});
 }
@@ -143,8 +133,6 @@ function askCustomer() {
 		cartQty = answer.qtyToBuy;
 		cartId = answer.itemsToBuy;
 
-		// connection.end();
-		// makeSale();
 		checkQty();
 	});
 }
@@ -156,7 +144,6 @@ function checkQty() {
 	// Log variables set in askCustomer()  ~WORKS
 	// console.log('ID to buy:', cartId);
 	// console.log('Amount to buy:', cartQty);
-	// console.log('-------------LINE 159');
 
 	// Do another query to see what the current on_hand_qty is, for the id the user has entered
 	connection.query('SELECT id, on_hand_qty, price FROM products WHERE ?',
@@ -178,9 +165,8 @@ function checkQty() {
 						// console.log('Update inventory to: ' + updateQty);
 						// console.log('-------------');
 
-
 					// How do I do the math not tied to this for loop???????
-					// Does it matter....
+					// Does it matter?....
 
 					// Finally checks qty user wants against available qty
 					switch (true) {
