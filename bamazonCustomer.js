@@ -158,7 +158,7 @@ function checkQty() {
 	console.log('-------------');
 
 	// Do another query to see what the current on_hand_qty is, for the id the user has entered
-	connection.query('SELECT id, on_hand_qty FROM products WHERE ?',
+	connection.query('SELECT id, on_hand_qty, price FROM products WHERE ?',
 		{
 			id: cartId
 		},
@@ -193,7 +193,14 @@ function checkQty() {
 						// All other quantities means there's enough stock to fulfil the order
 						default:
 							console.log('Success! Those are in stock.');
+
 							// Call function to update the database and display cart total to customer
+
+							// Have the cart total display off this function? Then makeSale() does the database update...
+							console.log('\nHOW BOUT NOW?');  //~YES
+							console.log(res[q].price);
+
+
 							makeSale();
 							break;
 					}
@@ -207,6 +214,7 @@ function checkQty() {
 }
 
 
+// Might be better to rename inventoryUpdate...*********
 function makeSale() {
 	
 	let query = connection.query('UPDATE products SET ? WHERE ?', 
@@ -228,22 +236,17 @@ function makeSale() {
 
 			console.log('Inventory qty updated');
 			console.log(res.affectedRows + ' was updated\n');
+			// console.log(res.affectedRows + ' was updated\n');
+			console.log('-------------');
+			// Log full response so know what to drill in to...
+				// Nooooot what I was expecting... hrm...
+			// console.log(res);
 
-			connection.end();
+			// connection.end();
 		})
-
-	// Hold items to buy in new variable - new query
-	// use that as switch statement argument to check against
-	// case in stock, update qty in database, display total purchase cost, log sale successful
-	// case out of stock, log 'insufficient qty', log sale unsuccessful
-
-	// switch 
 
 	connection.end();
 }
-
-// Put this at end of last function to run
-// connection.end();
 
 
 
