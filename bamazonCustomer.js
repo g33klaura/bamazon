@@ -64,6 +64,7 @@ connection.connect(function(error) {
 // Will hold qty and id of product customer wishes to buy
 let cartQty;
 let cartId;
+let price;
 
 // Empty var to hold on_hand_qty from DB
 // let currentQty = 0;
@@ -197,9 +198,16 @@ function checkQty() {
 							// Call function to update the database and display cart total to customer
 
 							// Have the cart total display off this function? Then makeSale() does the database update...
-							console.log('\nHOW BOUT NOW?');  //~YES
-							console.log(res[q].price);
+							// console.log('\nHOW BOUT NOW?');  //~YES
+							// console.log(res[q].price);
 
+							// now, need to multiply price by purchase qty********
+							price = res[q].price;
+								// console.log(price);
+
+							let cartTotal = price * cartQty;
+
+								console.log('Your total today is: $' + cartTotal + '\n');
 
 							makeSale();
 							break;
