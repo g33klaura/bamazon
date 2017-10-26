@@ -173,8 +173,8 @@ function checkQty() {
 						
 						// If the update qty is 0 or below, the sale can't be completed
 						case (updateQty <= 0):
-							console.log( colors.cyan('Sorry, insufficient quantity available. Order cannot be fulfilled.') );
-							console.log( colors.cyan('Please try again.\n') );
+							console.log(colors.cyan('Sorry, insufficient quantity available. Order cannot be fulfilled.'));
+							console.log(colors.cyan('Please try again.\n'));
 
 							// Calls function to display products again
 							displayProducts();
@@ -186,27 +186,25 @@ function checkQty() {
 
 							// Call function to update the database and display cart total to customer
 
-							// Have the cart total display off this function? Then makeSale() does the database update...
+							// Have the cart total display off this function? Then inventoryUpdate() does the database update...
 							// console.log('\nHOW BOUT NOW?');  //~YES
 							// console.log(res[q].price);
 
-							// now, need to multiply price by purchase qty********
 							price = res[q].price;
 								// console.log(price);
 
+							// Multiply retail price by qty customer wishes to buy
 							let cartTotal = price * cartQty;
 
 							console.log(colors.rainbow('+++++++++++++\n'));
-								console.log( colors.white('Your total for this purchase is: ') + colors.bold(colors.magenta('$' + cartTotal)));
-								console.log( colors.white('Thanks for your your business!\n') );
+								console.log(colors.white('Your total for this purchase is: ') + colors.bold(colors.magenta('$' + cartTotal)));
+								console.log(colors.white('Thanks for your your business!\n'));
 							console.log(colors.rainbow('+++++++++++++\n'));
 
-							makeSale();
+							inventoryUpdate();
 							break;
 					}
 				};  //Closes for loop
-				// console.log('Is this thing on? ' + currentQty);
-				// No, no it is not on............
 			});
 
 	// console.log(currentQty);
@@ -214,8 +212,7 @@ function checkQty() {
 }
 
 
-// Might be better to rename inventoryUpdate...*********
-function makeSale() {
+function inventoryUpdate() {
 	
 	let query = connection.query('UPDATE products SET ? WHERE ?', 
 		[
@@ -223,14 +220,13 @@ function makeSale() {
 				on_hand_qty: updateQty
 			},
 			{
-				// id: answer.itemsToBuy
 				id: cartId
 			}
 		],
 		function(err, res) {
 
 			// console.log(query.sql);
-			// console.log('-------------LINE 245');
+			// console.log('-------------LINE 229');
 
 			if (err) throw err;
 
@@ -238,16 +234,10 @@ function makeSale() {
 			// console.log('Inventory qty updated');
 			// console.log(res.affectedRows + ' was updated\n');
 
-			// console.log('-------------LINE 252');
-
-			// Log full response so know what to drill in to...
-				// Nooooot what I was expecting... hrm...
-			// console.log(res);
+			// console.log('-------------LINE 237');
 
 			continueShopping();
 		});
-
-	// connection.end();
 }
 
 
@@ -263,9 +253,11 @@ function continueShopping() {
 		}
 	])
 	.then(function(response) {
+		// If yes, keep shopping
 		if (response.buyMore === true) {
 			displayProducts();
 		} else {
+		// If no, send them on their way!
 			console.log( colors.rainbow('\nHave a great day!\n') );
 			connection.end();
 		}
