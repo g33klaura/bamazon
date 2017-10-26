@@ -186,7 +186,7 @@ function checkQty() {
 						// If the update qty is 0 or below, the sale can't be completed
 						case (updateQty <= 0):
 							console.log('Sorry, insufficient quantity available. Order cannot be fulfilled.');
-							console.log('Would you like to make another purchase?');
+							console.log('Please try again.');
 							// Calls function to display products again
 							displayProducts();
 							break;
@@ -207,7 +207,8 @@ function checkQty() {
 
 							let cartTotal = price * cartQty;
 
-								console.log('Your total today is: $' + cartTotal + '\n');
+								console.log('Your total for this purchase is: $' + cartTotal);
+								console.log('Thanks for your your business!\n');
 
 							makeSale();
 							break;
@@ -251,10 +252,33 @@ function makeSale() {
 			// console.log(res);
 
 			// connection.end();
-		})
+			continueShopping();
+		});
 
-	connection.end();
+	// connection.end();
 }
+
+
+function continueShopping() {
+
+	inquirer.prompt([
+		{
+			type: 'confirm',
+			name: 'buyMore',
+			message: 'Would you like to make another purchase?',
+			default: true
+		}
+	])
+	.then(function(response) {
+		if (response.buyMore === true) {
+			displayProducts();
+		} else {
+			console.log('Have a great day!\n');
+			connection.end();
+		}
+	});
+}
+
 
 
 
