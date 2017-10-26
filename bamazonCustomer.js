@@ -99,7 +99,7 @@ function displayProducts() {
 			console.log(colors.magenta('ID: ', colors.bold(results[k].id), ' ', results[k].product_name, ' ', results[k].price));
 
 			// console.log(colors.magenta(results[k].price));
-			console.log(colors.rainbow('-----------------------------------------------------------------'));
+			console.log(colors.rainbow('\n-----------------------------------------------------------------\n'));
 		}
 
 		askCustomer();
@@ -113,13 +113,13 @@ function askCustomer() {
 		{
 			type: 'input',
 			name: 'itemsToBuy',
-			message: colors.white('Please enter the id of the item you wish to buy.')
+			message: colors.white('What\'s the ID of the item you wish to buy?')
 		},
 		// Second prompt asks how many units of the item they'd like to buy
 		{
 			type: 'input',
 			name: 'qtyToBuy',
-			message: colors.white('How many of those would you like to buy?')
+			message: colors.white('How many of those would you like?')
 		}
 	])
 	.then(function(answer) {
@@ -134,9 +134,9 @@ function askCustomer() {
 			for (var i = 0; i < results.length; i++) {
 				// console.log('You selected: ' + results[i].product_name);
 				// why is the dept_name undefined? results[i].dept_name... since it's not asked for in inquirer?...
-				console.log('\nYou\'d like to buy ' + colors.underline(answer.qtyToBuy) + ', "' + results[i].product_name + '"');
+				console.log( colors.white('\nYou\'ve added ') + colors.magenta(colors.underline(answer.qtyToBuy) + ', ' + results[i].product_name) + colors.white(' to your cart.') );
 				
-				console.log('\nLet\'s check if that\'s in stock...\n');
+				console.log( colors.cyan('\nLet\'s check if that\'s in stock...\n') );
 			};	
 		});
 
@@ -156,7 +156,7 @@ function checkQty() {
 	// Log variables set in askCustomer()  ~WORKS
 	// console.log('ID to buy:', cartId);
 	// console.log('Amount to buy:', cartQty);
-	console.log('-------------');
+	// console.log('-------------LINE 159');
 
 	// Do another query to see what the current on_hand_qty is, for the id the user has entered
 	connection.query('SELECT id, on_hand_qty, price FROM products WHERE ?',
@@ -167,14 +167,16 @@ function checkQty() {
 				// console.log(res);
 				
 				for (var q = 0; q < res.length; q++) {
-					console.log('Product ID: ' + res[q].id + ' Qty avail: ' + res[q].on_hand_qty);
+					
+					// Test log
+					// console.log('Product ID: ' + res[q].id + ' Qty avail: ' + res[q].on_hand_qty);
 				
 					let currentQty = res[q].on_hand_qty;
 						// console.log('currentQty= ' + currentQty);
 						
 					updateQty = currentQty - cartQty;
-						console.log('Update inventory to: ' + updateQty);
-						console.log('-------------');
+						// console.log('Update inventory to: ' + updateQty);
+						// console.log('-------------');
 
 
 					// How do I do the math not tied to this for loop???????
@@ -185,15 +187,16 @@ function checkQty() {
 						
 						// If the update qty is 0 or below, the sale can't be completed
 						case (updateQty <= 0):
-							console.log('Sorry, insufficient quantity available. Order cannot be fulfilled.');
-							console.log('Please try again.');
+							console.log( colors.cyan('Sorry, insufficient quantity available. Order cannot be fulfilled.') );
+							console.log( colors.cyan('Please try again.\n') );
+
 							// Calls function to display products again
 							displayProducts();
 							break;
 
 						// All other quantities means there's enough stock to fulfil the order
 						default:
-							console.log('Success! Those are in stock.');
+							console.log( colors.cyan('Success! Those are in stock.\n') );
 
 							// Call function to update the database and display cart total to customer
 
@@ -207,8 +210,10 @@ function checkQty() {
 
 							let cartTotal = price * cartQty;
 
-								console.log('Your total for this purchase is: $' + cartTotal);
-								console.log('Thanks for your your business!\n');
+							console.log(colors.rainbow('+++++++++++++\n'));
+								console.log( colors.white('Your total for this purchase is: ') + colors.bold(colors.magenta('$' + cartTotal)));
+								console.log( colors.white('Thanks for your your business!\n') );
+							console.log(colors.rainbow('+++++++++++++\n'));
 
 							makeSale();
 							break;
@@ -238,20 +243,21 @@ function makeSale() {
 		],
 		function(err, res) {
 
-			console.log(query.sql);
-			console.log('-------------');
+			// console.log(query.sql);
+			// console.log('-------------LINE 245');
 
 			if (err) throw err;
 
-			console.log('Inventory qty updated');
-			console.log(res.affectedRows + ' was updated\n');
+			console.log( colors.cyan('Order successful\n') );
+			// console.log('Inventory qty updated');
 			// console.log(res.affectedRows + ' was updated\n');
-			console.log('-------------');
+
+			// console.log('-------------LINE 252');
+
 			// Log full response so know what to drill in to...
 				// Nooooot what I was expecting... hrm...
 			// console.log(res);
 
-			// connection.end();
 			continueShopping();
 		});
 
@@ -259,13 +265,14 @@ function makeSale() {
 }
 
 
+// After successful purchase, ask customer if they'd like to keep shopping
 function continueShopping() {
 
 	inquirer.prompt([
 		{
 			type: 'confirm',
 			name: 'buyMore',
-			message: 'Would you like to make another purchase?',
+			message: colors.white('Would you like to keep shopping?'),
 			default: true
 		}
 	])
@@ -273,12 +280,11 @@ function continueShopping() {
 		if (response.buyMore === true) {
 			displayProducts();
 		} else {
-			console.log('Have a great day!\n');
+			console.log( colors.rainbow('\nHave a great day!\n') );
 			connection.end();
 		}
 	});
 }
-
 
 
 
