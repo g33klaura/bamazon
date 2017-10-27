@@ -59,10 +59,14 @@ let price;
 // Will hold integer to set new on_hand_qty to
 let updateQty;
 
+// Table alignment
+let aligns = [null, null, 'right'];
+
 // Customer view table displays ID, Product Name, and Price (dept and qty are for management views)
 let table = new Table({
-	head: ['id', 'product_name', 'price'],
-	colWidths: [5, 50, 10]
+	head: ['ID', 'Product Name', 'Price'],
+	colWidths: [5, 52, 10],
+	colAligns: aligns
 });
 
 
@@ -82,6 +86,7 @@ function displayProducts() {
 		// Raw results logs an array of objects
 		// console.log(results);
 
+		// ##### First Way #####
 		// Loop through results to log the id, names, and retail prices of items available in store
 		/*
 		for (var k = 0; k < results.length; k++) {
@@ -91,16 +96,20 @@ function displayProducts() {
 			console.log(colors.rainbow('\n-----------------------------------------------------------------\n'));
 		}
 		*/
+		// ##### First Way end #####
+
 
 		// ##### CLI-Table #####
+
 		// Table row data from db results
 		rows.forEach(function (results) {
 			table.push([results.id, results.product_name, results.price]);
 		})
 
 		// Table logs to console *fingers crossed*
-		console.log(table.toString(), '\n');
-		// ##### CLI-Table #####
+		console.log( colors.magenta(table.toString() ), '\n');
+
+		// ##### CLI-Table end #####
 
 
 		// Calls function with prompts for customer to select items & qty to buy
