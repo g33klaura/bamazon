@@ -43,6 +43,10 @@ connection.connect(function(error) {
 	// Test log to check for connection  ~WORKS
 	// console.log( colors.heman('\nconnected as id ' + connection.threadId + '\n') );
 
+	// Welcome message
+	console.log(colors.rainbow('\n++++++++++++++++++++++++++++++++\n'));
+	console.log(colors.rainbow('Welcome to Bamazon!\n'));
+
 	displayProducts();
 });
 
@@ -62,9 +66,18 @@ let updateQty;
 // Table alignment
 let aligns = [null, null, 'right'];
 
+// Table characters
+let chars = {
+	'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗',
+  'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚',
+  'bottom-right': '╝', 'left': '║', 'left-mid': '╟', 'mid': '─',
+  'mid-mid': '┼', 'right': '║', 'right-mid': '╢', 'middle': '│'
+};
+
 // Customer view table displays ID, Product Name, and Price (dept and qty are for management views)
 let table = new Table({
 	head: ['ID', 'Product Name', 'Price'],
+	chars: chars,
 	colWidths: [5, 52, 10],
 	colAligns: aligns
 });
@@ -106,8 +119,8 @@ function displayProducts() {
 			table.push([results.id, results.product_name, results.price]);
 		})
 
-		// Table logs to console *fingers crossed*
-		console.log( colors.magenta(table.toString() ), '\n');
+		// Table logs to console *fingers crossed*  ~WORKS
+		console.log(colors.magenta(table.toString()), '\n');
 
 		// ##### CLI-Table end #####
 
@@ -145,9 +158,9 @@ function askCustomer() {
 			for (var i = 0; i < results.length; i++) {
 				// console.log('You selected: ' + results[i].product_name);
 				// why is the dept_name undefined? results[i].dept_name... since it's not asked for in inquirer?...
-				console.log( colors.white('\nYou\'ve added ') + colors.magenta(colors.underline(answer.qtyToBuy) + ', ' + results[i].product_name) + colors.white(' to your cart.') );
+				console.log(colors.white('\nYou\'ve added ') + colors.red(colors.bold(answer.qtyToBuy + ', ' + results[i].product_name)) + colors.white(' to your cart.'));
 				
-				console.log( colors.cyan('\nLet\'s check if that\'s in stock...\n') );
+				console.log(colors.cyan('\nChecking stock level...\n'));
 			};	
 		});
 
@@ -212,10 +225,12 @@ function checkQty() {
 							// Multiply retail price by qty customer wishes to buy
 							let cartTotal = price * cartQty;
 
-							console.log(colors.rainbow('+++++++++++++\n'));
-								console.log(colors.white('Your total for this purchase is: ') + colors.bold(colors.magenta('$' + cartTotal)));
-								console.log(colors.white('Thanks for your your business!\n'));
-							console.log(colors.rainbow('+++++++++++++\n'));
+							console.log(colors.rainbow('+++++++++++++++++++++++++++++++++++++++++++++\n'));
+								
+							console.log(colors.white('Your total for this purchase is: ') + colors.bold(colors.magenta('$' + cartTotal)));
+							console.log(colors.white('Thanks for your your business!\n'));
+							
+							console.log(colors.rainbow('+++++++++++++++++++++++++++++++++++++++++++++\n'));
 
 							inventoryUpdate();
 							break;
@@ -268,10 +283,14 @@ function continueShopping() {
 	.then(function(response) {
 		// If yes, keep shopping
 		if (response.buyMore === true) {
+			
 			displayProducts();
+
 		} else {
 		// If no, send them on their way!
-			console.log( colors.rainbow('\nHave a great day!\n') );
+			console.log(colors.rainbow('\nHave a great day!'));
+			console.log(colors.rainbow('\n++++++++++++++++++++++++++++++++\n'));
+
 			connection.end();
 		}
 	});
