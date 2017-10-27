@@ -4,7 +4,7 @@
 Steps to complete:
 [x] Connection to database
 [x] 'bamazonCustomer.js' displays all items for sale
-[] Use fancy tables to display
+[x] Use fancy tables to display
 [x] next, prompts user to enter the id of an item they wish to buy
 [x] second prompt asks how many of the item they wish to buy
 [x] show "added to cart" or "insufficient qty" message
@@ -41,10 +41,12 @@ connection.connect(function(error) {
 
 	if (error) throw error;
 	// Test log to check for connection  ~WORKS
-	// console.log( '\nconnected as id ' + connection.threadId + '\n' );
+	// console.log( colors.heman('\nconnected as id ' + connection.threadId + '\n') );
 
 	displayProducts();
 });
+
+
 
 // VARIABLES & CONSTRUCTORS ============================
 // 
@@ -57,17 +59,11 @@ let price;
 // Will hold integer to set new on_hand_qty to
 let updateQty;
 
-// ***Still need to get tables working*************************************
-// Customer view table displays ID, Product Name, Dept(?), and Price
-// let table = new Table({
-// 	head: ['TH 1 id', 'TH 2 product_name'],
-// 	colWidths: [5, 60]
-// });
-
-// table.push(
-// 	['First value', 'Second value'],
-// );
-// console.log(table.toString());
+// Customer view table displays ID, Product Name, and Price (dept and qty are for management views)
+let table = new Table({
+	head: ['id', 'product_name', 'price'],
+	colWidths: [5, 50, 10]
+});
 
 
 
@@ -75,21 +71,37 @@ let updateQty;
 //
 
 function displayProducts() {
-	connection.query('SELECT * FROM products', function(error, results) {
+	// Use with For loop
+	// connection.query('SELECT * FROM products', function(error, results) {
+
+	// Use with tables
+	connection.query('SELECT * FROM products', function(error, rows) {
+
 		if (error) throw error;
 		
-		// Raw results logs an array of objects...
-		// How can I get this to a format for cli-table...
-
+		// Raw results logs an array of objects
 		// console.log(results);
 
 		// Loop through results to log the id, names, and retail prices of items available in store
+		/*
 		for (var k = 0; k < results.length; k++) {
 	
 			console.log(colors.magenta('ID: ', colors.bold(results[k].id), ' ', results[k].product_name, ' ', results[k].price));
 
 			console.log(colors.rainbow('\n-----------------------------------------------------------------\n'));
 		}
+		*/
+
+		// ##### CLI-Table #####
+		// Table row data from db results
+		rows.forEach(function (results) {
+			table.push([results.id, results.product_name, results.price]);
+		})
+
+		// Table logs to console *fingers crossed*
+		console.log(table.toString(), '\n');
+		// ##### CLI-Table #####
+
 
 		// Calls function with prompts for customer to select items & qty to buy
 		askCustomer();
