@@ -75,12 +75,18 @@ let chars = {
 };
 
 // Customer view table displays ID, Product Name, and Price (dept and qty are for management views)
-let table = new Table({
-	head: ['ID', 'Product Name', 'Price'],
-	chars: chars,
-	colWidths: [5, 52, 10],
-	colAligns: aligns
-});
+
+// let table;
+
+// let table = new Table({
+// 	head: ['ID', 'Product Name', 'Price'],
+// 	chars: chars,
+// 	colWidths: [5, 52, 10],
+// 	colAligns: aligns
+// });
+
+// Need to CLEAR first table, otherwise will log twice if not-in-stock is triggered******
+	// table.slice(0, 10);
 
 
 
@@ -92,6 +98,15 @@ function displayProducts() {
 	// connection.query('SELECT * FROM products', function(error, results) {
 
 	// Use with tables
+				// **********************************
+			let table = new Table({
+				head: ['ID', 'Product Name', 'Price'],
+				chars: chars,
+				colWidths: [5, 52, 10],
+				colAligns: aligns
+			});
+			// **********************************
+
 	connection.query('SELECT * FROM products', function(error, rows) {
 
 		if (error) throw error;
@@ -114,8 +129,12 @@ function displayProducts() {
 
 		// ##### CLI-Table #####
 
+
 		// Table row data from db results
 		rows.forEach(function (results) {
+	
+
+
 			table.push([results.id, results.product_name, results.price]);
 		})
 
@@ -206,7 +225,7 @@ function checkQty() {
 							console.log(colors.cyan('Please try again.\n'));
 
 							// Calls function to display products again
-							displayProducts();
+							displayProducts(); 
 							break;
 
 						// All other quantities means there's enough stock to fulfil the order
