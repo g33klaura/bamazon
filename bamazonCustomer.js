@@ -166,7 +166,7 @@ function checkQty() {
 	// console.log('ID to buy:', cartId);
 	// console.log('Amount to buy:', cartQty);
 
-	// Do another query to see what the current on_hand_qty is, for the id the user has entered
+	// Do another db query to check the o/h qty of the product the user selected
 	connection.query('SELECT id, on_hand_qty, price FROM products WHERE ?',
 		{
 			id: cartId
@@ -183,11 +183,6 @@ function checkQty() {
 						// console.log('currentQty= ' + currentQty);
 						
 					updateQty = currentQty - cartQty;
-						// console.log('Update inventory to: ' + updateQty);
-						// console.log('-------------');
-
-					// How do I do the math not tied to this for loop???????
-					// Does it matter?....
 
 					// Finally checks qty user wants against available qty
 					switch (true) {
@@ -227,9 +222,6 @@ function checkQty() {
 					}
 				};  //Closes for loop
 			});
-
-	// console.log(currentQty);
-	// My scope is off............ how to carry the response through?!!
 }
 
 
@@ -247,7 +239,7 @@ function inventoryUpdate() {
 		function(err, res) {
 
 			// console.log(query.sql);
-			// console.log('-------------LINE 229');
+			// console.log('-------------LINE 242');
 
 			if (err) throw err;
 
@@ -255,7 +247,7 @@ function inventoryUpdate() {
 			// console.log('Inventory qty updated');
 			// console.log(res.affectedRows + ' was updated\n');
 
-			// console.log('-------------LINE 237');
+			// console.log('-------------LINE 250');
 
 			continueShopping();
 		});
@@ -269,7 +261,7 @@ function continueShopping() {
 		{
 			type: 'confirm',
 			name: 'buyMore',
-			message: colors.white('Would you like to keep shopping?'),
+			message: colors.white('Would you like to continue shopping?'),
 			default: true
 		}
 	])
