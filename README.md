@@ -23,13 +23,13 @@ Process for bamazonCustomer view
 * User types 'node bamazonCustomer.js' to initialize the program
 
 * First view ~ Welcome and Products Table
-![order1_a](/Users/lauraboetchermini/Library/Mobile Documents/com~apple~CloudDocs/Bootcamp_wrkng/bamazon hw/screenshots/order1_a.png)
+![order1_a](screenshots/order1_a.png)
 
   * Table displays available products by their id, product name, and retail price
   * User is prompted to enter an id and qty of an item they wish to purchase
 
 * Second view ~ Cart and In-Stock Process
-![order1_b](/Users/lauraboetchermini/Library/Mobile Documents/com~apple~CloudDocs/Bootcamp_wrkng/bamazon hw/screenshots/order1_b.png)
+![order1_b](screenshots/order1_b.png)
 
   * Items and quantity the user selected are logged
   * A function is triggered to check if there's enough stock of the item to complete the purchase
@@ -39,27 +39,27 @@ Process for bamazonCustomer view
   * Finally a new prompt asks the user if they'd like to continue shopping
 
 * Continue Shopping ~ Yes
-![order2_a](/Users/lauraboetchermini/Library/Mobile Documents/com~apple~CloudDocs/Bootcamp_wrkng/bamazon hw/screenshots/order2_a.png)
+![order2_a](screenshots/order2_a.png)
 
   * Confirming "yes" triggers the product display table and initial purchase prompts
 
 * Out-of-Stock Process
-![order3_a](/Users/lauraboetchermini/Library/Mobile Documents/com~apple~CloudDocs/Bootcamp_wrkng/bamazon hw/screenshots/order3_a.png)
+![order3_a](screenshots/order3_a.png)
 
   * If the user enters a quantity that is out of stock, a message is logged that the "order cannot be fulfilled"
   * The product display table is triggered again
 
 * Final View ~ Order Successful, End Shopping
-![order3_b](/Users/lauraboetchermini/Library/Mobile Documents/com~apple~CloudDocs/Bootcamp_wrkng/bamazon hw/screenshots/order3_b.png)
+![order3_b](screenshots/order3_b.png)
 
   * After another successful order, the user is again asked if they'd like to continue shopping
   * Confirming "no" logs a message to "have a great day"
 
 * Database Inventory View Before Sales
-![db_start](/Users/lauraboetchermini/Library/Mobile Documents/com~apple~CloudDocs/Bootcamp_wrkng/bamazon hw/screenshots/db_start.png)
+![db_start](screenshots/db_start.png)
 
 * Database Inventory View After Sales
-![db_end](/Users/lauraboetchermini/Library/Mobile Documents/com~apple~CloudDocs/Bootcamp_wrkng/bamazon hw/screenshots/db_end.png)
+![db_end](screenshots/db_end.png)
 
   * The quantity of items from the examples have been deducted successfully
 ------
