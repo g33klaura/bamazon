@@ -1,18 +1,19 @@
-# bamazon
+<!-- Application Name -->
+<h1 align="center">Bamazon</h1>
 
-CLI storefront integrating a MySQL database
+<!-- App Description -->
+<div align="center">CLI storefront integrating a MySQL database</div>
 
-These are a few of my favorite things (to buy... if I had all the $$$...)
 
 ## Technologies Used
-JavaScript, Node.js, MySQL, and MySQL, Colors.js & CLI-Table packages
+JavaScript, Node.js, MySQL, and the MySQL, Colors.js & CLI-Table packages
 
-## Application Video
+### Application Video
 [Video of application in action][2c341124]
 
   [2c341124]: https://github.com/g33klaura/bamazon/blob/master/screenshots/bamazonCustomer_view.mov "Process Video"
 
-## Process Screenshots for "bamazonCustomer" View
+### Screenshots: "bamazonCustomer" View
 
 * View of successfully processed order (entire process)
 
@@ -22,14 +23,14 @@ JavaScript, Node.js, MySQL, and MySQL, Colors.js & CLI-Table packages
 ### Step-by-step screens
 * User types 'node bamazonCustomer.js' to initialize the program
 
-### First view ~ Welcome and Products Table
+#### First view ~ Welcome and Products Table
 
 ![order1_a](screenshots/order1_a.png)
 
   * Table displays available products by their id, product name, and retail price
   * User is prompted to enter an id and qty of an item they wish to purchase
 
-### Second view ~ Cart and In-Stock Process
+#### Second view ~ Cart and In-Stock Process
 
 ![order1_b](screenshots/order1_b.png)
 
@@ -40,31 +41,31 @@ JavaScript, Node.js, MySQL, and MySQL, Colors.js & CLI-Table packages
   * When the quantity is successfully deducted from the database, "order successful" logs
   * Finally a new prompt asks the user if they'd like to continue shopping
 
-### Continue Shopping ~ Yes
+#### Continue Shopping ~ Yes
 
 ![order2_a](screenshots/order2_a.png)
 
   * Confirming "yes" triggers the product display table and initial purchase prompts
 
-### Out-of-Stock Process
+#### Out-of-Stock Process
 
 ![order3_a](screenshots/order3_a.png)
 
   * If the user enters a quantity that is out of stock, a message is logged that the "order cannot be fulfilled"
   * The product display table is triggered again
 
-### Final View ~ Order Successful, End Shopping
+#### Final View ~ Order Successful, End Shopping
 
 ![order3_b](screenshots/order3_b.png)
 
   * After another successful order, the user is again asked if they'd like to continue shopping
   * Confirming "no" logs a message to "have a great day"
 
-### Database Inventory View Before Sales
+#### Database Inventory View Before Sales
 
 ![db_start](screenshots/db_start.png)
 
-### Database Inventory View After Sales
+#### Database Inventory View After Sales
 
 ![db_end](screenshots/db_end.png)
 
