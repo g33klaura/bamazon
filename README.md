@@ -1,6 +1,6 @@
 <h1 align="center">Bamazon</h1>
 
-<div align="center">Command-line storefront integrating a MySQL database</div>
+<div align="center">Command-line storefront application integrating a MySQL database</div>
 
 ## Contents
 
@@ -20,15 +20,16 @@
 
 ## Concept
 
-Lorem ipsum
+A command-line storefront application integrating a MySQL database to track and update stock quantities of available products. Friendly messages alert the customer key information about their transactions.
 
 ## Technologies Used
 
-MySQL, Node.js, JavaScript, and the packages MySQL, Colors.js & CLI-Table
+MySQL, Node.js, JavaScript, and the packages NPM MySQL, Inquirer, Colors.js & CLI-Table
 
 ## Key Features
 
-* Thing 1
+- Check for sufficient stock level before completing purchase process
+- Table view of products for sale
 
 <hr/>
 
@@ -42,7 +43,7 @@ MySQL, Node.js, JavaScript, and the packages MySQL, Colors.js & CLI-Table
 
 ### Screenshots: "bamazonCustomer" View
 
-* View of successfully processed order (entire process)
+- View of successfully processed order (entire process)
 
 ![order1](screenshots/order1.png)
 
