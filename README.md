@@ -1,17 +1,44 @@
-<!-- Application Name -->
 <h1 align="center">Bamazon</h1>
 
-<!-- App Description -->
-<div align="center">CLI storefront integrating a MySQL database</div>
+<div align="center">Command-line storefront integrating a MySQL database</div>
 
+## Contents
+
+- [Concept](#concept)
+- [Technologies Used](#technologies-used)
+- [Key Features](#key-features)
+- [Application Video](#application-video)
+- [Screenshots: "bamazonCustomer" View](#screenshots-bamazoncustomer-view)
+  - [Step-by-step screens](#step-by-step-screens)
+    - [First view ~ Welcome and Products Table](#first-view-welcome-and-products-table)
+    - [Second view ~ Cart and In-Stock Process](#second-view-cart-and-in-stock-process)
+    - [Continue Shopping ~ Yes](#continue-shopping-yes)
+    - [Out-of-Stock Process](#out-of-stock-process)
+    - [Final View ~ Order Successful, End Shopping](#final-view-order-successful-end-shopping)
+    - [Database Inventory View Before Sales](#database-inventory-view-before-sales)
+    - [Database Inventory View After Sales](#database-inventory-view-after-sales)
+
+## Concept
+
+Lorem ipsum
 
 ## Technologies Used
-JavaScript, Node.js, MySQL, and the MySQL, Colors.js & CLI-Table packages
+
+MySQL, Node.js, JavaScript, and the packages MySQL, Colors.js & CLI-Table
+
+## Key Features
+
+* Thing 1
+
+<hr/>
 
 ### Application Video
+
 [Video of application in action][2c341124]
 
   [2c341124]: https://github.com/g33klaura/bamazon/blob/master/screenshots/bamazonCustomer_view.mov "Process Video"
+
+<hr/>
 
 ### Screenshots: "bamazonCustomer" View
 
@@ -70,5 +97,6 @@ JavaScript, Node.js, MySQL, and the MySQL, Colors.js & CLI-Table packages
 ![db_end](screenshots/db_end.png)
 
   * The quantity of items from the examples have been deducted successfully
+
 ------
-_Thanks for reading!_
+_Thanks for reading. Happy shopping!_
